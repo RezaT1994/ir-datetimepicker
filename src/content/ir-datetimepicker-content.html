@@ -6,11 +6,11 @@
 
 		<div>
 			<button mat-icon-button matTooltip="ماه بعد" matTooltipPosition="above" *ngIf="!selectMonth" (click)="increaseOneMonth()">
-				<mat-icon class="md-24" aria-label="">keyboard_arrow_left</mat-icon>
+				<mat-icon class="md-24" aria-label="">keyboard_arrow_right</mat-icon>
 			</button>
 
 			<button mat-icon-button matTooltip="سال بعد" matTooltipPosition="above" *ngIf="selectMonth" (click)="increaseOneYear()">
-				<mat-icon class="md-24" aria-label="">keyboard_arrow_left</mat-icon>
+				<mat-icon class="md-24" aria-label="">keyboard_arrow_right</mat-icon>
 			</button>
 
 			<button class="ir-switch-view" mat-button (click)="switchView()">
@@ -21,11 +21,11 @@
 			</button>
 
 			<button mat-icon-button matTooltip="ماه قبل" [disabled]="disablePrevMonth" matTooltipPosition="above" *ngIf="!selectMonth" (click)="decreaseOneMonth()">
-				<mat-icon class="md-24" aria-label="">keyboard_arrow_right</mat-icon>
+				<mat-icon class="md-24" aria-label="">keyboard_arrow_left</mat-icon>
 			</button>
 			
 			<button mat-icon-button matTooltip="سال قبل" [disabled]="disablePrevYear" matTooltipPosition="above" *ngIf="selectMonth" (click)="decreaseOneYear()">
-				<mat-icon class="md-24" aria-label="">keyboard_arrow_right</mat-icon>
+				<mat-icon class="md-24" aria-label="">keyboard_arrow_left</mat-icon>
 			</button>
 		</div>
 	</div>
