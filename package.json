@@ -5,5 +5,5 @@
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
   },
-  "keywords": ["angular","angular6","material","datepicker","timepicker","datetimepicker","persiandate","persiandatepicker"]
+  "keywords": ["angular","angular6-library","datepicker","persian-datepicker","persian-datetime","angular-material-time-picker"]
 }
