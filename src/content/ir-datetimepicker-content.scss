@@ -1,0 +1,200 @@
+.ir-datepicker-header {
+    padding-bottom: 15px;
+    text-align: center;
+    position: relative;
+    height: 55px;    
+
+    .ir-switch-view {
+        width: 150px;
+    }
+
+    .ir-select-time {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}
+
+.ir-timepicker-content {
+    height: 415px;
+    position: relative;
+
+    .ir-time-container {
+        position: absolute;
+        bottom: 25px;
+        left: 0;
+        height: 36px;
+        line-height: 36px;
+
+        div {
+            font-size: 20px;
+            width: 40px;
+            display: inline-block;
+            text-align: center;
+
+            &:nth-child(2) {
+                width: 10px !important;
+            }
+
+            input {
+                text-align: center;
+            }
+
+            .mat-form-field {
+                display: block;
+            }
+        }
+    }
+
+    .ir-submit-time {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 36px;
+    }
+
+    .ir-clock-hour {
+        width: 312px;
+        height: 312px;
+        border: 1px solid #949494;
+        border-radius: 50%;
+        position: relative;
+
+        .ir-houre {
+            position: absolute;
+            width: 27px;
+            height: 27px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 24px;
+            font-family: arial;
+            cursor: pointer;
+        }
+
+        .ir-hour-text {
+            position: absolute;
+            top: calc(50% - 11px);
+            left: calc(50% - 50px);
+            width: 100px;
+            text-align: center;
+        }
+    }
+
+    .ir-clock-minute {
+        width: 312px;
+        height: 312px;
+        border: 1px solid #949494;
+        border-radius: 50%;
+        position: relative;
+
+        .ir-minute {
+            position: absolute;
+            width: 27px;
+            height: 27px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 24px;
+            font-family: arial;
+            cursor: pointer;
+        }
+
+        .ir-minute-text {
+            position: absolute;
+            top: calc(50% - 11px);
+            left: calc(50% - 50px);
+            width: 100px;
+            text-align: center;
+        }
+    }
+}
+
+.ir-datepicker-content {
+    height: 360px;
+    position: relative;
+
+    .ir-today {
+        position: absolute;
+        bottom: 0;
+        height: 36px;
+        line-height: 36px;
+        left: 0;
+    }
+
+    .ir-time-content {
+        position: absolute;
+        bottom: -2px;
+        right: 160px;
+        text-align: left;
+        color: #000;
+    }
+
+    .ir-select-today {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        height: 36px;
+    }
+
+    .ir-day-table {
+        direction: rtl;
+        width: 100%;
+    
+        thead {
+            font-size: 12px;
+            font-weight: 100;
+            color: #9a9a9a;
+            border-bottom: 1px solid #eee;
+    
+            th {
+                text-align: center;
+                width: 44.5px;
+            }
+        }
+    
+        tbody {
+            font-size: 12px;
+            font-weight: bold;
+
+            tr {
+                height: 48px;
+                
+                td {
+                    text-align: center;
+                    width: 44.5px;
+
+                    .mat-mini-fab.mat-accent {
+                        background-color: #fff !important;
+                        color: #000 !important;
+                        box-shadow: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .ir-month-table {
+        direction: rtl;
+        width: 100%;
+    
+        thead {
+            font-size: 12px;
+            font-weight: 100;
+            color: #9a9a9a;
+            border-bottom: 1px solid #eee;
+        }
+    
+        tbody {
+            font-size: 12px;
+            font-weight: bold;
+
+            tr {
+                height: 48px;
+                
+                td {
+                    text-align: center;
+                    width: 104px;
+                }
+            }
+        }
+    }
+}

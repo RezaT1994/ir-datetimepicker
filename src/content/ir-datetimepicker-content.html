@@ -1,0 +1,95 @@
+<div>
+	<div class="ir-datepicker-header" *ngIf="!selectTime && !justTime">
+		<button class="ir-select-time" mat-icon-button *ngIf="showTimer" matTooltip="انتخاب ساعت" matTooltipPosition="above" (click)="selectTimer()">
+			<mat-icon class="md-24" aria-label="">watch_later</mat-icon>
+		</button>
+
+		<div>
+			<button mat-icon-button matTooltip="ماه بعد" matTooltipPosition="above" *ngIf="!selectMonth" (click)="increaseOneMonth()">
+				<mat-icon class="md-24" aria-label="">keyboard_arrow_left</mat-icon>
+			</button>
+
+			<button mat-icon-button matTooltip="سال بعد" matTooltipPosition="above" *ngIf="selectMonth" (click)="increaseOneYear()">
+				<mat-icon class="md-24" aria-label="">keyboard_arrow_left</mat-icon>
+			</button>
+
+			<button class="ir-switch-view" mat-button (click)="switchView()">
+				<mat-icon class="md-24" *ngIf="!selectMonth" aria-label="">keyboard_arrow_down</mat-icon>
+				<mat-icon class="md-24" *ngIf="selectMonth" aria-label="">keyboard_arrow_up</mat-icon>
+				<span *ngIf="!selectMonth">{{ TitleMonth + ' ' + TitleYear }}</span>
+				<span *ngIf="selectMonth">{{ TitleYear }}</span>
+			</button>
+
+			<button mat-icon-button matTooltip="ماه قبل" [disabled]="disablePrevMonth" matTooltipPosition="above" *ngIf="!selectMonth" (click)="decreaseOneMonth()">
+				<mat-icon class="md-24" aria-label="">keyboard_arrow_right</mat-icon>
+			</button>
+			
+			<button mat-icon-button matTooltip="سال قبل" [disabled]="disablePrevYear" matTooltipPosition="above" *ngIf="selectMonth" (click)="decreaseOneYear()">
+				<mat-icon class="md-24" aria-label="">keyboard_arrow_right</mat-icon>
+			</button>
+		</div>
+	</div>
+	<div class="ir-datepicker-content" *ngIf="!selectTime && !justTime">
+		<table class="ir-day-table" *ngIf="!selectMonth">
+			<thead>
+				<tr>
+					<th>ش</th>
+					<th>ی</th>
+					<th>د</th>
+					<th>س</th>
+					<th>چ</th>
+					<th>پ</th>
+					<th>ج</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let rows of dayRows">
+					<td *ngFor="let cels of rows">
+						<button color="primary" *ngIf="cels.text != '' && currentDayNumber == cels.text" mat-icon-button mat-raised-button (click)="changeDate(cels.text)">{{cels.text}}</button>
+						<button *ngIf="cels.text != '' && currentDayNumber != cels.text" [disabled]="cels.disabled !== undefined" mat-icon-button (click)="changeDate(cels.text)">{{cels.text}}</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="ir-month-table" *ngIf="selectMonth">
+			<tbody>
+				<thead>
+				</thead>
+				<tr *ngFor="let month of months; let i = index">
+					<td *ngFor="let m of month; let j = index">
+						<button mat-raised-button color="primary" *ngIf="currentMonthNumber == (3 * i + (j + 1))" (click)="changeMonth((3 * i + (j + 1)))">{{m.text}}</button>
+						<button mat-button *ngIf="currentMonthNumber != (3 * i + (j + 1))" [disabled]="m.disabled == true" (click)="changeMonth((3 * i + (j + 1)))">{{m.text}}</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="ir-today">{{todayDateTimeString}}</div>
+		<button class="ir-select-today" mat-raised-button color="warn" (click)="selectToday()">انتخاب امروز</button>
+		<div class="ir-time-content" *ngIf="showTimer">ساعت: {{currentHourNumber}}:{{currentMinuteNumber}}</div>
+	</div>
+	<div class="ir-timepicker-content" *ngIf="selectTime || justTime">
+		<div class="ir-clock-hour" *ngIf="showHour">
+			<div class="ir-houre" *ngFor="let h12 of hour12" [ngStyle]="{'right.px': h12.right, 'top.px': h12.top}" (click)="selectHour(h12.text)">{{h12.text}}</div>
+			<div class="ir-houre" *ngFor="let h24 of hour24" [ngStyle]="{'right.px': h24.right, 'top.px': h24.top}" (click)="selectHour(h24.text)">{{h24.text}}</div>
+			<div class="ir-hour-text">انتخاب ساعت</div>
+		</div>
+		<div class="ir-clock-minute" *ngIf="!showHour">
+			<div class="ir-minute" *ngFor="let m of minute" [ngStyle]="{'right.px': m.right, 'top.px': m.top}" (click)="selectMinute(m.text)">{{m.text}}</div>
+			<div class="ir-minute-text">انتخاب دقیقه</div>
+		</div>
+		<div class="ir-time-container">
+			<div>
+				<mat-form-field>
+					<input matInput [(ngModel)]="currentHourNumber">
+				</mat-form-field>
+			</div>
+			<div>:</div>
+			<div>
+				<mat-form-field>
+					<input matInput [(ngModel)]="currentMinuteNumber">
+				</mat-form-field>
+			</div>
+		</div>
+		<button class="ir-submit-time" mat-raised-button color="warn" (click)="submitTime()">تایید</button>
+	</div>
+</div>

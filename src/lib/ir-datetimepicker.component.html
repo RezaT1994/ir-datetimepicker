@@ -1,0 +1,5 @@
+<mat-form-field class="{{class}}">
+	<input matInput #IrInput (keyup)="keyup()" (blur)="onBlur()" [(ngModel)]="value" [readonly]="readonly" placeholder="{{placeholder}}">
+	<button matSuffix (click)="openDialog()" *ngIf="!justTime" class="ir-date-toggle-button" type="button"></button>
+	<button matSuffix (click)="openDialog()" *ngIf="justTime" class="ir-time-toggle-button" type="button"></button>
+</mat-form-field>
