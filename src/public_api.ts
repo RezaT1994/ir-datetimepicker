@@ -3,3 +3,4 @@
  */
 
 export * from './lib/ir-datetimepicker.module';
+export * from './lib/ir-datetimepicker.component';
