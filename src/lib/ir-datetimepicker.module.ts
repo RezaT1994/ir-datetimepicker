@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { IrDatetimepickerComponent } from './ir-datetimepicker.component';
 import { FormsModule } from '@angular/forms';
 import { IrDateTimepickerContent } from '../content/ir-datetimepicker-content';
-import { BrowserModule } from '@angular/platform-browser';
-
+import { CommonModule } from '@angular/common';
 import {
 	MatButtonModule,
 	MatIconModule,
@@ -20,7 +19,7 @@ import {
 		MatInputModule,
 		MatDialogModule,
 		MatTooltipModule,
-		BrowserModule
+		CommonModule
 	],
 	declarations: [IrDatetimepickerComponent, IrDateTimepickerContent],
 	exports: [IrDatetimepickerComponent],
