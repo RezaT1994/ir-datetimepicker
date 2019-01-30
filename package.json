@@ -1,15 +1,11 @@
 {
   "name": "ir-datetimepicker",
-  "version": "1.0.3",
+  "version": "1.2.0",
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
   },
   "keywords": ["angular","angular6-library","datepicker","persian-datepicker","persian-datetime","angular-material-time-picker"],
   "homepage": "https://github.com/RezaT1994/ir-datetimepicker",
-  "author": [
-    {
-      "name": "Reza Tayebi"
-    }
-  ]
+  "author": "Reza Tayebi"
 }

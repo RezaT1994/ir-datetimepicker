@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IrDatetimepickerComponent } from './ir-datetimepicker.component';
 import { FormsModule } from '@angular/forms';
-import { IrDateTimepickerContent } from '../content/ir-datetimepicker-content';
+import { IrDateTimepickerContentComponent } from '../content/ir-datetimepicker-content';
 import { CommonModule } from '@angular/common';
 import {
 	MatButtonModule,
@@ -21,8 +21,8 @@ import {
 		MatTooltipModule,
 		CommonModule
 	],
-	declarations: [IrDatetimepickerComponent, IrDateTimepickerContent],
+	declarations: [IrDatetimepickerComponent, IrDateTimepickerContentComponent],
 	exports: [IrDatetimepickerComponent],
-	entryComponents: [IrDateTimepickerContent]
+	entryComponents: [IrDateTimepickerContentComponent]
 })
 export class IrDateTimePickerModule { }

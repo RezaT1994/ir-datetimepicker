@@ -1,228 +1,233 @@
 export class Jalali {
-    public toJalaali(gy, gm, gd) {
-        gy = parseInt(gy);
-        gm = parseInt(gm);
-        gd = parseInt(gd);
-        return this.d2j(this.g2d(gy, gm, gd));
-    }
+	public toJalaali(gy, gm, gd) {
+		gy = parseInt(gy, 0);
+		gm = parseInt(gm, 0);
+		gd = parseInt(gd, 0);
+		return this.d2j(this.g2d(gy, gm, gd));
+	}
 
-    /*
-      Converts a Jalaali date to Gregorian.
-    */
-    public toGregorian(jy, jm, jd) {
-        return this.d2g(this.j2d(jy, jm, jd));
-    }
+	/*
+	  Converts a Jalaali date to Gregorian.
+	*/
+	public toGregorian(jy, jm, jd) {
+		return this.d2g(this.j2d(jy, jm, jd));
+	}
 
-    /*
-      Checks whether a Jalaali date is valid or not.
-    */
-    public isValidJalaaliDate(jy, jm, jd) {
-        return jy >= -61 && jy <= 3177 &&
-            jm >= 1 && jm <= 12 &&
-            jd >= 1 && jd <= this.jalaaliMonthLength(jy, jm);
-    }
+	/*
+	  Checks whether a Jalaali date is valid or not.
+	*/
+	public isValidJalaaliDate(jy, jm, jd) {
+		return jy >= -61 && jy <= 3177 &&
+			jm >= 1 && jm <= 12 &&
+			jd >= 1 && jd <= this.jalaaliMonthLength(jy, jm);
+	}
 
-    /*
-      Is this a leap year or not?
-    */
-    public isLeapJalaaliYear(jy) {
-        return this.jalCal(jy).leap === 0;
-    }
+	/*
+	  Is this a leap year or not?
+	*/
+	public isLeapJalaaliYear(jy) {
+		return this.jalCal(jy).leap === 0;
+	}
 
-    /*
-      Number of days in a given month in a Jalaali year.
-    */
-    public jalaaliMonthLength(jy, jm) {
-        if (jm <= 6) return 31;
-        if (jm <= 11) return 30;
-        if (this.isLeapJalaaliYear(jy)) return 30;
-        return 29;
-    }
+	/*
+	  Number of days in a given month in a Jalaali year.
+	*/
+	public jalaaliMonthLength(jy, jm) {
+		if (jm <= 6) { return 31; }
+		if (jm <= 11) { return 30; }
+		if (this.isLeapJalaaliYear(jy)) { return 30; }
+		return 29;
+	}
 
-    /*
-      This public determines if the Jalaali (Persian) year is
-      leap (366-day long) or is the common year (365 days), and
-      finds the day in March (Gregorian calendar) of the first
-      day of the Jalaali year (jy).
-    
-      @param jy Jalaali calendar year (-61 to 3177)
-      @return
-        leap: number of years since the last leap year (0 to 4)
-        gy: Gregorian year of the beginning of Jalaali year
-        march: the March day of Farvardin the 1st (1st day of jy)
-      @see: http://www.astro.uni.torun.pl/~kb/Papers/EMP/PersianC-EMP.htm
-      @see: http://www.fourmilab.ch/documents/calendar/
-    */
-    public jalCal(jy) {
-        // Jalaali years starting the 33-year rule.
-        let breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178],
-            bl = breaks.length,
-            gy = jy + 621,
-            leapJ = -14,
-            jp = breaks[0],
-            jm,
-            jump = 1,
-            leap,
-            n,
-            i;
+	/*
+	  This public determines if the Jalaali (Persian) year is
+	  leap (366-day long) or is the common year (365 days), and
+	  finds the day in March (Gregorian calendar) of the first
+	  day of the Jalaali year (jy).
 
-        if (jy < jp || jy >= breaks[bl - 1])
-            throw new Error('Invalid Jalaali year ' + jy);
+	  @param jy Jalaali calendar year (-61 to 3177)
+	  @return
+		leap: number of years since the last leap year (0 to 4)
+		gy: Gregorian year of the beginning of Jalaali year
+		march: the March day of Farvardin the 1st (1st day of jy)
+	  @see: http://www.astro.uni.torun.pl/~kb/Papers/EMP/PersianC-EMP.htm
+	  @see: http://www.fourmilab.ch/documents/calendar/
+	*/
+	public jalCal(jy) {
+		// Jalaali years starting the 33-year rule.
+		const breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
+		const bl = breaks.length;
+		const gy = jy + 621;
+		let leapJ = -14;
+		let jp = breaks[0];
+		let jm: any;
+		let jump = 1;
+		let leap: any;
+		let n: any;
+		let i: number;
 
-        // Find the limiting years for the Jalaali year jy.
-        for (i = 1; i < bl; i += 1) {
-            jm = breaks[i];
-            jump = jm - jp;
-            if (jy < jm)
-                break;
-            leapJ = leapJ + this.div(jump, 33) * 8 + this.div(this.mod(jump, 33), 4);
-            jp = jm;
-        }
-        n = jy - jp;
+		if (jy < jp || jy >= breaks[bl - 1]) {
+			throw new Error('Invalid Jalaali year ' + jy);
+		}
 
-        // Find the number of leap years from AD 621 to the beginning
-        // of the current Jalaali year in the Persian calendar.
-        leapJ = leapJ + this.div(n, 33) * 8 + this.div(this.mod(n, 33) + 3, 4);
-        if (this.mod(jump, 33) === 4 && jump - n === 4)
-            leapJ += 1;
+		// Find the limiting years for the Jalaali year jy.
+		for (i = 1; i < bl; i += 1) {
+			jm = breaks[i];
+			jump = jm - jp;
+			if (jy < jm) {
+				break;
+			}
+			leapJ = leapJ + this.div(jump, 33) * 8 + this.div(this.mod(jump, 33), 4);
+			jp = jm;
+		}
+		n = jy - jp;
 
-        // And the same in the Gregorian calendar (until the year gy).
-        let leapG = this.div(gy, 4) - this.div((this.div(gy, 100) + 1) * 3, 4) - 150;
+		// Find the number of leap years from AD 621 to the beginning
+		// of the current Jalaali year in the Persian calendar.
+		leapJ = leapJ + this.div(n, 33) * 8 + this.div(this.mod(n, 33) + 3, 4);
+		if (this.mod(jump, 33) === 4 && jump - n === 4) {
+			leapJ += 1;
+		}
 
-        // Determine the Gregorian date of Farvardin the 1st.
-        let march = 20 + leapJ - leapG;
+		// And the same in the Gregorian calendar (until the year gy).
+		const leapG = this.div(gy, 4) - this.div((this.div(gy, 100) + 1) * 3, 4) - 150;
 
-        // Find how many years have passed since the last leap year.
-        if (jump - n < 6)
-            n = n - jump + this.div(jump + 4, 33) * 33;
-        leap = this.mod(this.mod(n + 1, 33) - 1, 4);
-        if (leap === -1) leap = 4;
+		// Determine the Gregorian date of Farvardin the 1st.
+		const march = 20 + leapJ - leapG;
 
-        return {
-            leap: leap,
-            gy: gy,
-            march: march
-        };
-    }
+		// Find how many years have passed since the last leap year.
+		if (jump - n < 6) {
+			n = n - jump + this.div(jump + 4, 33) * 33;
+		}
+		leap = this.mod(this.mod(n + 1, 33) - 1, 4);
+		if (leap === -1) { leap = 4; }
 
-    /*
-      Converts a date of the Jalaali calendar to the Julian Day number.
-    
-      @param jy Jalaali year (1 to 3100)
-      @param jm Jalaali month (1 to 12)
-      @param jd Jalaali day (1 to 29/31)
-      @return Julian Day number
-    */
-    public j2d(jy, jm, jd) {
-        let r = this.jalCal(jy);
-        return this.g2d(r.gy, 3, r.march) + (jm - 1) * 31 - this.div(jm, 7) * (jm - 7) + jd - 1;
-    }
+		return {
+			leap: leap,
+			gy: gy,
+			march: march
+		};
+	}
 
-    /*
-      Converts the Julian Day number to a date in the Jalaali calendar.
-    
-      @param jdn Julian Day number
-      @return
-        jy: Jalaali year (1 to 3100)
-        jm: Jalaali month (1 to 12)
-        jd: Jalaali day (1 to 29/31)
-    */
-    public d2j(jdn) {
-        let gy = this.d2g(jdn).gy, // Calculate Gregorian year (gy).
-            jy = gy - 621,
-            r = this.jalCal(jy),
-            jdn1F = this.g2d(gy, 3, r.march),
-            jd,
-            jm,
-            k;
+	/*
+	  Converts a date of the Jalaali calendar to the Julian Day number.
 
-        // Find number of days that passed since 1 Farvardin.
-        k = jdn - jdn1F;
-        if (k >= 0) {
-            if (k <= 185) {
-                // The first 6 months.
-                jm = 1 + this.div(k, 31);
-                jd = this.mod(k, 31) + 1;
-                return {
-                    jy: jy,
-                    jm: jm,
-                    jd: jd
-                };
-            } else {
-                // The remaining months.
-                k -= 186;
-            }
-        } else {
-            // Previous Jalaali year.
-            jy -= 1;
-            k += 179;
-            if (r.leap === 1)
-                k += 1;
-        }
-        jm = 7 + this.div(k, 30);
-        jd = this.mod(k, 30) + 1;
-        return {
-            jy: jy,
-            jm: jm,
-            jd: jd
-        };
-    }
+	  @param jy Jalaali year (1 to 3100)
+	  @param jm Jalaali month (1 to 12)
+	  @param jd Jalaali day (1 to 29/31)
+	  @return Julian Day number
+	*/
+	public j2d(jy, jm, jd) {
+		const r = this.jalCal(jy);
+		return this.g2d(r.gy, 3, r.march) + (jm - 1) * 31 - this.div(jm, 7) * (jm - 7) + jd - 1;
+	}
 
-    /*
-      Calculates the Julian Day number from Gregorian or Julian
-      calendar dates. This integer number corresponds to the noon of
-      the date (i.e. 12 hours of Universal Time).
-      The procedure was tested to be good since 1 March, -100100 (of both
-      calendars) up to a few million years into the future.
-    
-      @param gy Calendar year (years BC numbered 0, -1, -2, ...)
-      @param gm Calendar month (1 to 12)
-      @param gd Calendar day of the month (1 to 28/29/30/31)
-      @return Julian Day number
-    */
-    public g2d(gy, gm, gd) {
-        let d = this.div((gy + this.div(gm - 8, 6) + 100100) * 1461, 4)
-            + this.div(153 * this.mod(gm + 9, 12) + 2, 5)
-            + gd - 34840408;
-        d = d - this.div(this.div(gy + 100100 + this.div(gm - 8, 6), 100) * 3, 4) + 752;
-        return d;
-    }
+	/*
+	  Converts the Julian Day number to a date in the Jalaali calendar.
 
-    /*
-      Calculates Gregorian and Julian calendar dates from the Julian Day number
-      (jdn) for the period since jdn=-34839655 (i.e. the year -100100 of both
-      calendars) to some millions years ahead of the present.
-    
-      @param jdn Julian Day number
-      @return
-        gy: Calendar year (years BC numbered 0, -1, -2, ...)
-        gm: Calendar month (1 to 12)
-        gd: Calendar day of the month M (1 to 28/29/30/31)
-    */
-    public d2g(jdn) {
-        let j;
-        j = 4 * jdn + 139361631;
-        j = j + this.div(this.div(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908;
-        let i = this.div(this.mod(j, 1461), 4) * 5 + 308;;
-        let gd = this.div(this.mod(i, 153), 5) + 1;
-        let gm = this.mod(this.div(i, 153), 12) + 1;
-        let gy = this.div(j, 1461) - 100100 + this.div(8 - gm, 6);
-        return {
-            gy: gy,
-            gm: gm,
-            gd: gd
-        }
-    }
+	  @param jdn Julian Day number
+	  @return
+		jy: Jalaali year (1 to 3100)
+		jm: Jalaali month (1 to 12)
+		jd: Jalaali day (1 to 29/31)
+	*/
+	public d2j(jdn) {
+		const gy = this.d2g(jdn).gy; // Calculate Gregorian year (gy).
+		let jy = gy - 621;
+		const r = this.jalCal(jy);
+		const jdn1F = this.g2d(gy, 3, r.march);
+		let jd;
+		let jm;
+		let k;
 
-    /*
-      Utility helper publics.
-    */
+		// Find number of days that passed since 1 Farvardin.
+		k = jdn - jdn1F;
+		if (k >= 0) {
+			if (k <= 185) {
+				// The first 6 months.
+				jm = 1 + this.div(k, 31);
+				jd = this.mod(k, 31) + 1;
+				return {
+					jy: jy,
+					jm: jm,
+					jd: jd
+				};
+			} else {
+				// The remaining months.
+				k -= 186;
+			}
+		} else {
+			// Previous Jalaali year.
+			jy -= 1;
+			k += 179;
+			if (r.leap === 1) {
+				k += 1;
+			}
+		}
+		jm = 7 + this.div(k, 30);
+		jd = this.mod(k, 30) + 1;
+		return {
+			jy: jy,
+			jm: jm,
+			jd: jd
+		};
+	}
 
-    public div(a, b) {
-        return ~~(a / b);
-    }
+	/*
+	  Calculates the Julian Day number from Gregorian or Julian
+	  calendar dates. This integer number corresponds to the noon of
+	  the date (i.e. 12 hours of Universal Time).
+	  The procedure was tested to be good since 1 March, -100100 (of both
+	  calendars) up to a few million years into the future.
 
-    public mod(a, b) {
-        return a - ~~(a / b) * b;
-    }
+	  @param gy Calendar year (years BC numbered 0, -1, -2, ...)
+	  @param gm Calendar month (1 to 12)
+	  @param gd Calendar day of the month (1 to 28/29/30/31)
+	  @return Julian Day number
+	*/
+	public g2d(gy, gm, gd) {
+		let d = this.div((gy + this.div(gm - 8, 6) + 100100) * 1461, 4)
+			+ this.div(153 * this.mod(gm + 9, 12) + 2, 5)
+			+ gd - 34840408;
+		d = d - this.div(this.div(gy + 100100 + this.div(gm - 8, 6), 100) * 3, 4) + 752;
+		return d;
+	}
+
+	/*
+	  Calculates Gregorian and Julian calendar dates from the Julian Day number
+	  (jdn) for the period since jdn=-34839655 (i.e. the year -100100 of both
+	  calendars) to some millions years ahead of the present.
+
+	  @param jdn Julian Day number
+	  @return
+		gy: Calendar year (years BC numbered 0, -1, -2, ...)
+		gm: Calendar month (1 to 12)
+		gd: Calendar day of the month M (1 to 28/29/30/31)
+	*/
+	public d2g(jdn) {
+		let j;
+		j = 4 * jdn + 139361631;
+		j = j + this.div(this.div(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908;
+		const i = this.div(this.mod(j, 1461), 4) * 5 + 308;
+		const gd = this.div(this.mod(i, 153), 5) + 1;
+		const gm = this.mod(this.div(i, 153), 12) + 1;
+		const gy = this.div(j, 1461) - 100100 + this.div(8 - gm, 6);
+		return {
+			gy: gy,
+			gm: gm,
+			gd: gd,
+		};
+	}
+
+	/*
+	  Utility helper publics.
+	*/
+
+	public div(a, b) {
+		return parseInt((a / b).toString(), 0);
+	}
+
+	public mod(a, b) {
+		return a - parseInt((a / b).toString(), 0) * b;
+	}
 }
