@@ -116,6 +116,8 @@ export class IrDatetimepickerComponent implements ControlValueAccessor, OnInit {
 							event.fullDate = `${event.gDate}T00:00:00.000Z`;
 						}
 					}
+				} else {
+					invalid = true;
 				}
 			} else {
 				if (/^(([0-9]){2}\:([0-9]){2})$/g.exec(this.value) != null) {
